@@ -4,14 +4,14 @@ import "net/http"
 import (
 	"encoding/json"
 	"github.com/backedrum/lipz/models"
-	"github.com/akrennmair/gopcap"
 	"log"
+	"github.com/google/gopacket/pcap"
 )
 
 // List available network devices
 func (api *API) Devices(w http.ResponseWriter, req *http.Request) {
 	var d []pcap.Interface
-	d, err := pcap.Findalldevs()
+	d, err := pcap.FindAllDevs()
 	if err != nil {
 		log.Fatal(err)
 	}
