@@ -38,5 +38,9 @@ func NewRoutes(api *api.API) *mux.Router {
 		negroni.Wrap(http.HandlerFunc(api.SecretQuote)),
 	))
 
+	// devices
+	d := a.PathPrefix("/devices").Subrouter()
+	d.HandleFunc("/list", api.Devices).Methods("GET")
+
 	return mux
 }
