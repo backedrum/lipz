@@ -7,6 +7,17 @@ import Login from '@/components/Login'
 import Signup from '@/components/Signup'
 import SecretQuote from '@/components/SecretQuote'
 import UserInfo from '@/components/UserInfo'
+import Devices from '@/components/Devices'
+
+// import css
+import 'vue-easytable/libs/themes-base/index.css'
+
+// import table and pagination comp
+import {VTable, VPagination} from 'vue-easytable'
+
+// Register to global
+Vue.component(VTable.name, VTable)
+Vue.component(VPagination.name, VPagination)
 
 import VueResource from 'vue-resource'
 Vue.use(VueResource)
@@ -60,6 +71,11 @@ const router = new VueRouter({
       name: 'userinfo',
       component: UserInfo,
       beforeEnter: requireAuth
+    },
+    {
+      path: '/devices',
+      name: 'devices',
+      component: Devices
     }
   ]
 })
