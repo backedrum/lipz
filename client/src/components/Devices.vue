@@ -21,8 +21,8 @@
           tableData: [],
           columns: [
             {field: 'name', title: 'Name', width: 150, titleAlign: 'center', columnAlign: 'center', isFrozen: true},
-            {field: 'addressIP6', title: 'Address IP6', width: 280, titleAlign: 'center', columnAlign: 'center', isFrozen: true},
-            {field: 'addressIP4', title: 'Address IP4', width: 430, titleAlign: 'center', columnAlign: 'center', isFrozen: true}
+            {field: 'addressIP4', title: 'Address IP4', width: 430, titleAlign: 'center', columnAlign: 'center', isFrozen: true},
+            {field: 'addressIP6', title: 'Address IP6', width: 280, titleAlign: 'center', columnAlign: 'center', isFrozen: true}
           ]
         }
       }
@@ -37,11 +37,11 @@
               for (var i = 0; i < response.body.Devices.length; i++) {
                 var device = response.body.Devices[i]
                 var addressIP6 = device.Addresses.length > 0
-                  ? ('IP:' + device.Addresses[0].IP + ', Netmask:' + device.Addresses[0].Netmask) : '<undef>'
+                  ? device.Addresses[0].IP : '<undef>'
                 var addressIP4 = device.Addresses.length > 1
-                  ? ('IP:' + device.Addresses[1].IP + ', Netmask:' + device.Addresses[1].Netmask) : '<undef>'
+                  ? device.Addresses[1].IP : '<undef>'
 
-                self.tableConfig.tableData.push({'name': device.Name, 'addressIP6': addressIP6, 'addressIP4': addressIP4})
+                self.tableConfig.tableData.push({'name': device.Name, 'addressIP4': addressIP4, 'addressIP6': addressIP6})
               }
             }, response => {
               console.log(response)
