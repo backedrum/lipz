@@ -8,6 +8,10 @@ import Signup from '@/components/Signup'
 import SecretQuote from '@/components/SecretQuote'
 import UserInfo from '@/components/UserInfo'
 import Devices from '@/components/Devices'
+import Devices2 from '@/components/Devices2'
+
+import VueGoodTable from 'vue-good-table'
+Vue.use(VueGoodTable)
 
 // import css
 import 'vue-easytable/libs/themes-base/index.css'
@@ -76,6 +80,11 @@ const router = new VueRouter({
       path: '/devices',
       name: 'devices',
       component: Devices
+    },
+    {
+      path: '/devices2',
+      name: 'devices2',
+      component: Devices2
     }
   ]
 })
