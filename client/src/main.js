@@ -5,6 +5,9 @@ import App from './App'
 import Home from '@/components/Home'
 import Devices from '@/components/Devices'
 
+import VModal from 'vue-js-modal'
+Vue.use(VModal)
+
 import VueGoodTable from 'vue-good-table'
 Vue.use(VueGoodTable)
 
@@ -15,6 +18,8 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 Vue.config.productionTip = true
+
+Vue.use(VModal, { dialog: true })
 
 const router = new VueRouter({
   mode: 'history',

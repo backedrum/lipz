@@ -1,17 +1,26 @@
 <template>
   <div>
+    <capture-settings/>
     <vue-good-table
       title="Devices Available"
       :columns="columns"
       :rows="rows"
       :paginate="true"
-      :lineNumbers="true"/>
+      :lineNumbers="true"
+      :onClick="onClickFn">
+    <div slot="emptystate">
+      Sorry, there is nothing to display.
+    </div>
+    </vue-good-table>
   </div>
 </template>
 
 <script>
+  import CaptureSettings from './CaptureSettings.vue'
+
   export default {
-    name: 'test',
+    components: {CaptureSettings},
+    name: 'devicesTable',
     data () {
       return {
         columns: [
@@ -31,7 +40,10 @@
             filterable: true
           }
         ],
-        rows: []
+        rows: [],
+        onClickFn: function (row, index) {
+          this.$modal.show('captureSettings', {title: 'Start capture', interfaceName: row.name, ip4Address: row.addressIP4, ip6Address: row.addressIP6})
+        }
       }
     },
     methods: {
