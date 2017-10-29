@@ -10,17 +10,12 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">Brand</a>
+        <a class="navbar-brand" href="#">LIPZ</a>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-          <li><router-link to="home">Home</router-link></li>
-          <li v-if="!isAuthenticated()"><router-link to="login">Login</router-link></li>
-          <li v-if="!isAuthenticated()"><router-link to="signup">Sign Up</router-link></li>
-          <li v-if="isAuthenticated()"><router-link to="secretquote">Secret Quote</router-link></li>
-          <li v-if="isAuthenticated()"><router-link to="userinfo">User Info</router-link></li>
+          <li><router-link to="home">Dashboard</router-link></li>
           <li v-if="!isAuthenticated()"><router-link to="devices">Devices</router-link></li>
-          <li v-if="isAuthenticated()"><router-link to="logout" @click.native="logout()">Logout</router-link></li>
         </ul>
       </div>
     </div>

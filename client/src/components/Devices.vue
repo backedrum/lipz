@@ -1,30 +1,37 @@
 <template>
   <div>
-    <v-table
-      :width="800"
-      :height="350"
-      :columns="tableConfig.columns"
-      :table-data="tableConfig.tableData"
-      even-bg-color="#f4f4f4"
-      row-hover-color="#eee"
-      row-click-color="#edf7ff"
-    ></v-table>
+    <vue-good-table
+      title="Devices Available"
+      :columns="columns"
+      :rows="rows"
+      :paginate="true"
+      :lineNumbers="true"/>
   </div>
 </template>
 
 <script>
-  export default{
-    name: 'devices',
+  export default {
+    name: 'test',
     data () {
       return {
-        tableConfig: {
-          tableData: [],
-          columns: [
-            {field: 'name', title: 'Name', width: 150, titleAlign: 'center', columnAlign: 'center', isFrozen: true},
-            {field: 'addressIP4', title: 'Address IP4', width: 430, titleAlign: 'center', columnAlign: 'center', isFrozen: true},
-            {field: 'addressIP6', title: 'Address IP6', width: 280, titleAlign: 'center', columnAlign: 'center', isFrozen: true}
-          ]
-        }
+        columns: [
+          {
+            label: 'Name',
+            field: 'name',
+            filterable: true
+          },
+          {
+            label: 'Address IPv4',
+            field: 'addressIP4',
+            filterable: true
+          },
+          {
+            label: 'Address IPv6',
+            field: 'addressIP6',
+            filterable: true
+          }
+        ],
+        rows: []
       }
     },
     methods: {
@@ -41,7 +48,7 @@
                 var addressIP4 = device.Addresses.length > 1
                   ? device.Addresses[1].IP : '<undef>'
 
-                self.tableConfig.tableData.push({'name': device.Name, 'addressIP4': addressIP4, 'addressIP6': addressIP6})
+                self.rows.push({'name': device.Name, 'addressIP4': addressIP4, 'addressIP6': addressIP6})
               }
             }, response => {
               console.log(response)
