@@ -10,7 +10,7 @@ import (
 )
 
 // List available network devices
-func (api *API) Devices(w http.ResponseWriter, req *http.Request) {
+func Devices(w http.ResponseWriter, req *http.Request) {
 	var d []pcap.Interface
 	d, err := pcap.FindAllDevs()
 	if err != nil {

@@ -3,14 +3,12 @@ package routes
 import (
 	"net/http"
 
-	"github.com/gorilla/mux"
 	"github.com/backedrum/lipz/api"
-	"github.com/backedrum/lipz/auth"
-	"github.com/urfave/negroni"
+	"github.com/gorilla/mux"
 )
 
 // NewRoutes builds the routes for the api
-func NewRoutes(api *api.API) *mux.Router {
+func NewRoutes() *mux.Router {
 
 	mux := mux.NewRouter()
 
@@ -21,26 +19,13 @@ func NewRoutes(api *api.API) *mux.Router {
 	// api
 	a := mux.PathPrefix("/api").Subrouter()
 
-	// users
-	u := a.PathPrefix("/user").Subrouter()
-	u.HandleFunc("/signup", api.UserSignup).Methods("POST")
-	u.HandleFunc("/login", api.UserLogin).Methods("POST")
-	u.Handle("/info", negroni.New(
-		negroni.HandlerFunc(auth.JwtMiddleware.HandlerWithNext),
-		negroni.Wrap(http.HandlerFunc(api.UserInfo)),
-	))
-
-	// quotes
-	q := a.PathPrefix("/quote").Subrouter()
-	q.HandleFunc("/random", api.Quote).Methods("GET")
-	q.Handle("/protected/random", negroni.New(
-		negroni.HandlerFunc(auth.JwtMiddleware.HandlerWithNext),
-		negroni.Wrap(http.HandlerFunc(api.SecretQuote)),
-	))
-
 	// devices
 	d := a.PathPrefix("/devices").Subrouter()
 	d.HandleFunc("/list", api.Devices).Methods("GET")
+
+	// captured packets
+	p := a.PathPrefix("/capture/{interfaceName}").Subrouter()
+	p.HandleFunc("", api.Packets).Methods("GET")
 
 	return mux
 }

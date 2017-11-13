@@ -2,8 +2,8 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-import Home from '@/components/Home'
 import Devices from '@/components/Devices'
+import Capture from '@/components/Capture'
 
 import VModal from 'vue-js-modal'
 Vue.use(VModal)
@@ -23,16 +23,17 @@ Vue.use(VModal, { dialog: true })
 
 const router = new VueRouter({
   mode: 'history',
-  // base: __dirname,
+  base: __dirname,
   routes: [
-    {
-      path: '/',
-      component: Home
-    },
     {
       path: '/devices',
       name: 'devices',
       component: Devices
+    },
+    {
+      path: '/capture/:interfaceName/:',
+      name: 'capture',
+      component: Capture
     }
   ]
 })

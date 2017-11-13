@@ -14,8 +14,8 @@
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-          <li><router-link to="home">Dashboard</router-link></li>
-          <li v-if="!isAuthenticated()"><router-link to="devices">Devices</router-link></li>
+          <!--<li><router-link :to="{name:'dashboard'}">Dashboard</router-link></li>-->
+          <li><router-link :to="{name:'devices'}">Devices</router-link></li>
         </ul>
       </div>
     </div>
@@ -28,22 +28,10 @@
 </template>
 
 <script>
-import auth from './auth'
-
 export default {
 
   data () {
-    return {
-    }
-  },
-
-  methods: {
-    logout () {
-      auth.logout(this)
-    },
-    isAuthenticated () {
-      return auth.isAuthenticated()
-    }
+    return {}
   }
 }
 </script>

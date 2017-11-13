@@ -10,15 +10,14 @@
   <modal name="captureSettings"
          :width="300"
          :height="200"
-         :adaptive="adaptive"
          @before-open="beforeOpen"
          @before-close="beforeClose">
     <h4 align="center">Capture Settings</h4>
     <p>Device:<b>{{interfaceName}}</b></p>
     <p>IP4 address:<b>{{ip4Address}}</b></p>
     <p>IP6 address:<b>{{ip6Address}}</b></p>
-    <button id="startCapture" @click="$modal.hide('captureSettings')">Start capture!</button>
-    <button @click="$modal.hide('captureSettings')">Close</button>
+    <button id="startCapture" @click="captureStart()">Start capture!</button>
+    <button @click="captureStart()">Close</button>
   </modal>
 </template>
 <script>
@@ -40,6 +39,10 @@
       },
       beforeClose (event) {
         console.log(event)
+      },
+      captureStart () {
+        this.$router.push({name: 'capture', params: { interfaceName: this.interfaceName }})
+        this.$modal.hide('captureSettings')
       }
     }
   }

@@ -56,9 +56,9 @@
               for (var i = 0; i < response.body.Devices.length; i++) {
                 var device = response.body.Devices[i]
                 var addressIP6 = device.Addresses.length > 0
-                  ? device.Addresses[0].IP : '<undef>'
+                  ? device.Addresses[0].IP : '-'
                 var addressIP4 = device.Addresses.length > 1
-                  ? device.Addresses[1].IP : '<undef>'
+                  ? device.Addresses[1].IP : '-'
 
                 self.rows.push({'name': device.Name, 'addressIP4': addressIP4, 'addressIP6': addressIP6})
               }

@@ -1,6 +1,6 @@
-# starter
+# LIPZ
 
-> Go/Vue starter project
+> UI part of LIPZ
 
 ## Build Setup
 
