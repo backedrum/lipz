@@ -3,7 +3,10 @@
     margin-left: 25px;
   }
   #startCapture {
-    background-color: greenyellow;
+    background-color: darkseagreen;
+  }
+  #close {
+    background-color: mistyrose;
   }
 </style>
 <template>
@@ -17,7 +20,7 @@
     <p>IP4 address:<b>{{ip4Address}}</b></p>
     <p>IP6 address:<b>{{ip6Address}}</b></p>
     <button id="startCapture" @click="captureStart()">Start capture!</button>
-    <button @click="captureStart()">Close</button>
+    <button id="close" @click="$modal.hide('captureSettings')">Close</button>
   </modal>
 </template>
 <script>

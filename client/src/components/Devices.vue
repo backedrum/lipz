@@ -1,6 +1,25 @@
+<style scoped>
+  p {
+    margin-left: 25px;
+  }
+  #closeHolder {
+    text-align: center;
+  }
+  #close {
+    background-color: mistyrose;
+  }
+</style>
 <template>
   <div>
     <capture-settings/>
+    <modal name="warn"
+      :width="300"
+      :height="100">
+      <p>Traffic on this device cannot be captured. Please choose another one.</p>
+      <div id="closeHolder">
+      <button id="close" @click="$modal.hide('warn')">Close</button>
+      </div>
+    </modal>
     <vue-good-table
       title="Devices Available"
       :columns="columns"
@@ -42,6 +61,13 @@
         ],
         rows: [],
         onClickFn: function (row, index) {
+          if (row.addressIP4 === '-') {
+            this.$modal.show('warn', {
+              title: 'Cannot capture!'
+            })
+            return
+          }
+
           this.$modal.show('captureSettings', {title: 'Start capture', interfaceName: row.name, ip4Address: row.addressIP4, ip6Address: row.addressIP6})
         }
       }

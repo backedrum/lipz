@@ -28,7 +28,6 @@ func Packets(w http.ResponseWriter, req *http.Request) {
 	netPackets := []models.NetPacketInfo{}
 
 	for packet := range packetSource.Packets() {
-		fmt.Printf("Difference %f\n", time.Now().Sub(start).Seconds())
 		if time.Now().Sub(start).Seconds() > 15.0 {
 			log.Print("Stopping packets capture after 15 seconds.")
 			break
