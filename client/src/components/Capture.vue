@@ -4,6 +4,8 @@
       :columns="columns"
       :rows="rows"
       :paginate="true"
+      :globalSearch="true"
+      styleClass="table table-bordered table-striped"
       :lineNumbers="true">
       <div slot="emptystate">
         Please wait, capturing packets...
@@ -19,28 +21,23 @@
         columns: [
           {
             label: 'Protocol',
-            field: 'protocol',
-            filterable: true
+            field: 'protocol'
           },
           {
             label: 'Src IP',
-            field: 'srcIP',
-            filterable: true
+            field: 'srcIP'
           },
           {
             label: 'Src port',
-            field: 'srcPort',
-            filterable: true
+            field: 'srcPort'
           },
           {
             label: 'Dst IP',
-            field: 'dstIP',
-            filterable: true
+            field: 'dstIP'
           },
           {
             label: 'Dst port',
-            field: 'dstPort',
-            filterable: true
+            field: 'dstPort'
           },
           {
             label: 'Payload',

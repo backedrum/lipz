@@ -26,6 +26,7 @@
       :rows="rows"
       :paginate="true"
       :lineNumbers="true"
+      styleClass="table table-bordered table-striped condensed"
       :onClick="onClickFn">
     <div slot="emptystate">
       Sorry, there is nothing to display.
@@ -45,18 +46,15 @@
         columns: [
           {
             label: 'Name',
-            field: 'name',
-            filterable: true
+            field: 'name'
           },
           {
             label: 'Address IPv4',
-            field: 'addressIP4',
-            filterable: true
+            field: 'addressIP4'
           },
           {
             label: 'Address IPv6',
-            field: 'addressIP6',
-            filterable: true
+            field: 'addressIP6'
           }
         ],
         rows: [],
