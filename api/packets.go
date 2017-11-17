@@ -2,7 +2,6 @@ package api
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/backedrum/lipz/models"
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/layers"
@@ -10,17 +9,35 @@ import (
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
+	"strconv"
 	"time"
 )
 
-func Packets(w http.ResponseWriter, req *http.Request) {
+// CapturePackets performs packets capture based on provided interface name and duration.
+func CapturePackets(w http.ResponseWriter, req *http.Request) {
 	device := mux.Vars(req)["interfaceName"]
+	if device == "" {
+		log.Println("Missing device name.")
+		http.Error(w, "Missing device name.", http.StatusBadRequest)
+		return
+	}
+
+	durationStr := mux.Vars(req)["duration"]
+	duration, err := strconv.Atoi(durationStr)
+	if err != nil {
+		msg := "Cannot parse duration." + err.Error()
+		log.Printf("Cannot parse duration %s. Error:%s.", durationStr, err)
+		http.Error(w, msg, http.StatusBadRequest)
+		return
+	}
 
 	handle, err := pcap.OpenLive(device, 65535, false, -1*time.Second)
-	if err != nil {
-		log.Fatal(err)
-	}
 	defer handle.Close()
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "An error has been occurred while opening device for capture."+err.Error(), http.StatusInternalServerError)
+		return
+	}
 	packetSource := gopacket.NewPacketSource(handle, handle.LinkType())
 
 	start := time.Now()
@@ -28,8 +45,8 @@ func Packets(w http.ResponseWriter, req *http.Request) {
 	netPackets := []models.NetPacketInfo{}
 
 	for packet := range packetSource.Packets() {
-		if time.Now().Sub(start).Seconds() > 15.0 {
-			log.Print("Stopping packets capture after 15 seconds.")
+		if time.Now().Sub(start).Seconds() > float64(duration) {
+			log.Printf("Stopping packets capture after %d seconds.", duration)
 			break
 		}
 

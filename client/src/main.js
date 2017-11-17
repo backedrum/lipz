@@ -31,7 +31,7 @@ const router = new VueRouter({
       component: Devices
     },
     {
-      path: '/capture/:interfaceName/:',
+      path: '/capture/:interfaceName/:duration/:',
       name: 'capture',
       component: Capture
     }

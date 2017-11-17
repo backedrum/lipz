@@ -24,8 +24,8 @@ func NewRoutes() *mux.Router {
 	d.HandleFunc("/list", api.Devices).Methods("GET")
 
 	// captured packets
-	p := a.PathPrefix("/capture/{interfaceName}").Subrouter()
-	p.HandleFunc("", api.Packets).Methods("GET")
+	p := a.PathPrefix("/capture/{interfaceName}/{duration}").Subrouter()
+	p.HandleFunc("", api.CapturePackets).Methods("GET")
 
 	return mux
 }

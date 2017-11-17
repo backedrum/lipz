@@ -19,6 +19,14 @@
     <p>Device:<b>{{interfaceName}}</b></p>
     <p>IP4 address:<b>{{ip4Address}}</b></p>
     <p>IP6 address:<b>{{ip6Address}}</b></p>
+    <p>
+      <select @change="setDuration($event)">
+        <option disabled value="">Please select duration (sec)</option>
+        <option>15</option>
+        <option>30 </option>
+        <option>45</option>
+      </select>
+    </p>
     <button id="startCapture" @click="captureStart()">Start capture!</button>
     <button id="close" @click="$modal.hide('captureSettings')">Close</button>
   </modal>
@@ -44,8 +52,11 @@
         console.log(event)
       },
       captureStart () {
-        this.$router.push({name: 'capture', params: { interfaceName: this.interfaceName }})
+        this.$router.push({name: 'capture', params: { interfaceName: this.interfaceName, duration: this.duration }})
         this.$modal.hide('captureSettings')
+      },
+      setDuration (event) {
+        this.duration = event.target.value
       }
     }
   }
