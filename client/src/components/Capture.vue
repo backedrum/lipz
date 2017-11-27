@@ -8,13 +8,16 @@
       styleClass="table table-bordered table-striped"
       :lineNumbers="true">
       <div slot="emptystate">
-        Please wait, capturing packets...
+        <vue-simple-spinner line-fg-color="#666666"></vue-simple-spinner>
       </div>
     </vue-good-table>
 </template>
 
 <script>
+  import VueSimpleSpinner from 'vue-simple-spinner'
+
   export default {
+    components: {VueSimpleSpinner},
     name: 'packetsTable',
     data () {
       return {
