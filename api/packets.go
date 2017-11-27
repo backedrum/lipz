@@ -40,13 +40,22 @@ func CapturePackets(w http.ResponseWriter, req *http.Request) {
 	}
 	packetSource := gopacket.NewPacketSource(handle, handle.LinkType())
 
-	start := time.Now()
-
 	netPackets := []models.NetPacketInfo{}
 
+	// perform capture for the specified duration
+	timeout := make(chan bool, 1)
+	go func() {
+		time.Sleep(time.Duration(duration) * time.Second)
+		timeout <- true
+	}()
+
+capture:
 	for packet := range packetSource.Packets() {
-		if time.Now().Sub(start).Seconds() > float64(duration) {
+		select {
+		case <-timeout:
 			log.Printf("Stopping packets capture after %d seconds.", duration)
+			break capture
+		default:
 			break
 		}
 

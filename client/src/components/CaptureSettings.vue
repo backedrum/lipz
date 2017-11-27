@@ -47,6 +47,7 @@
         this.interfaceName = event.params.interfaceName
         this.ip4Address = event.params.ip4Address
         this.ip6Address = event.params.ip6Address
+        this.duration = 15
       },
       beforeClose (event) {
         console.log(event)
