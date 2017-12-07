@@ -12,3 +12,8 @@ type NetPacketInfo struct {
 type NetPacketInfoList struct {
 	NetPacketInfoList []NetPacketInfo
 }
+
+type CaptureSettings struct {
+	Duration int    `json:"duration"`
+	Filename string `json:"filename"`
+}

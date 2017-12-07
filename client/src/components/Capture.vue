@@ -55,7 +55,17 @@
         var self = this
 
         setTimeout(function () {
-          self.$http.get('/api/capture/' + self.$route.params.interfaceName + '/' + self.$route.params.duration)
+          self.$http.post('/api/capture/' +
+            self.$route.params.interfaceName,
+            {
+              'duration': parseInt(self.$route.params.duration, 10),
+              'filename': self.$route.params.filename
+            },
+            {
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            })
             .then(response => {
               for (var i = 0; i < response.body.NetPacketInfoList.length; i++) {
                 var packet = response.body.NetPacketInfoList[i]

@@ -6,10 +6,11 @@ import (
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/layers"
 	"github.com/google/gopacket/pcap"
+	"github.com/google/gopacket/pcapgo"
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
-	"strconv"
+	"os"
 	"time"
 )
 
@@ -22,13 +23,24 @@ func CapturePackets(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	durationStr := mux.Vars(req)["duration"]
-	duration, err := strconv.Atoi(durationStr)
-	if err != nil {
-		msg := "Cannot parse duration." + err.Error()
-		log.Printf("Cannot parse duration %s. Error:%s.", durationStr, err)
+	var cs models.CaptureSettings
+	decoder := json.NewDecoder(req.Body)
+	if err := decoder.Decode(&cs); err != nil {
+		msg := "Cannot parse capture settings" + err.Error()
+		log.Printf("%s, request body:%s", msg, req.Body)
 		http.Error(w, msg, http.StatusBadRequest)
 		return
+	}
+
+	var pw *pcapgo.Writer
+	if cs.Filename != "undefined" {
+		log.Printf("Received filename: %s", cs.Filename)
+
+		f, _ := os.Create(cs.Filename)
+		defer f.Close()
+
+		pw = pcapgo.NewWriter(f)
+		pw.WriteFileHeader(65535, 1)
 	}
 
 	handle, err := pcap.OpenLive(device, 65535, false, -1*time.Second)
@@ -45,7 +57,7 @@ func CapturePackets(w http.ResponseWriter, req *http.Request) {
 	// perform capture for the specified duration
 	timeout := make(chan bool, 1)
 	go func() {
-		time.Sleep(time.Duration(duration) * time.Second)
+		time.Sleep(time.Duration(cs.Duration) * time.Second)
 		timeout <- true
 	}()
 
@@ -53,10 +65,15 @@ capture:
 	for packet := range packetSource.Packets() {
 		select {
 		case <-timeout:
-			log.Printf("Stopping packets capture after %d seconds.", duration)
+			log.Printf("Stopping packets capture after %d seconds.", cs.Duration)
 			break capture
 		default:
 			break
+		}
+
+		// write captured packet to file
+		if pw != nil {
+			pw.WritePacket(packet.Metadata().CaptureInfo, packet.Data())
 		}
 
 		netPacket := models.NetPacketInfo{}

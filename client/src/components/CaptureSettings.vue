@@ -11,8 +11,8 @@
 </style>
 <template>
   <modal name="captureSettings"
-         :width="300"
-         :height="200"
+         :width="400"
+         :height="240"
          @before-open="beforeOpen"
          @before-close="beforeClose">
     <h4 align="center">Capture Settings</h4>
@@ -26,6 +26,9 @@
         <option>30 </option>
         <option>45</option>
       </select>
+    </p>
+    <p>
+    <input v-model="filename" placeholder="enter a filename to store capture" size="45">
     </p>
     <button id="startCapture" @click="captureStart()">Start capture!</button>
     <button id="close" @click="$modal.hide('captureSettings')">Close</button>
@@ -53,7 +56,7 @@
         console.log(event)
       },
       captureStart () {
-        this.$router.push({name: 'capture', params: { interfaceName: this.interfaceName, duration: this.duration }})
+        this.$router.push({name: 'capture', params: { interfaceName: this.interfaceName, duration: this.duration, filename: escape(this.filename) }})
         this.$modal.hide('captureSettings')
       },
       setDuration (event) {
