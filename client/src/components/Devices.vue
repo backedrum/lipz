@@ -25,7 +25,6 @@
       :columns="columns"
       :rows="rows"
       :paginate="true"
-      :lineNumbers="true"
       styleClass="table table-bordered table-striped condensed"
       :onClick="onClickFn">
     <div slot="emptystate">

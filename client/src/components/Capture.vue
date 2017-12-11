@@ -5,8 +5,7 @@
       :rows="rows"
       :paginate="true"
       :globalSearch="true"
-      styleClass="table table-bordered table-striped"
-      :lineNumbers="true">
+      styleClass="table table-bordered table-striped">
       <div slot="emptystate">
         <vue-simple-spinner line-fg-color="#666666"></vue-simple-spinner>
       </div>
@@ -44,7 +43,8 @@
           },
           {
             label: 'Payload',
-            field: 'payload'
+            field: 'payload',
+            width: '150px'
           }
         ],
         rows: []
