@@ -1,4 +1,4 @@
-### LIPZ - a tool for network monitoring and troubleshooting.
+### LIPZ - a tool for capturing network packages.
 
 - backend - golang,
 - frontend - vue.js
