@@ -5,19 +5,21 @@ import (
 
 	"github.com/backedrum/lipz/api"
 	"github.com/gorilla/mux"
+	_ "net/http/pprof"
+	"net/http/pprof"
 )
 
 // NewRoutes builds the routes for the api
 func NewRoutes() *mux.Router {
 
-	mux := mux.NewRouter()
+	m := mux.NewRouter()
 
 	// client static files
-	mux.Handle("/", http.FileServer(http.Dir("./client/dist/"))).Methods("GET")
-	mux.PathPrefix("/static/js").Handler(http.StripPrefix("/static/js/", http.FileServer(http.Dir("./client/dist/static/js/"))))
+	m.Handle("/", http.FileServer(http.Dir("./client/dist/"))).Methods("GET")
+	m.PathPrefix("/static/js").Handler(http.StripPrefix("/static/js/", http.FileServer(http.Dir("./client/dist/static/js/"))))
 
 	// api
-	a := mux.PathPrefix("/api").Subrouter()
+	a := m.PathPrefix("/api").Subrouter()
 
 	// devices
 	d := a.PathPrefix("/devices").Subrouter()
@@ -27,5 +29,7 @@ func NewRoutes() *mux.Router {
 	p := a.PathPrefix("/capture/{interfaceName}").Subrouter()
 	p.HandleFunc("", api.CapturePackets).Methods("POST")
 
-	return mux
+	m.NewRoute().PathPrefix("/debug/pprof/").HandlerFunc(pprof.Index)
+
+	return m
 }

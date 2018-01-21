@@ -21,3 +21,6 @@ npm run dev
 - Lib pcap from https://github.com/google/gopacket <br>
 - Table component from https://github.com/xaksis/vue-good-table <br>
 - Start go-vue.js template from https://github.com/markcheno/go-vue-starter <br>
+
+### Profile
+Inorder to profile the server with pprof: [http://localhost:3000/debug/pprof/](http://localhost:3000/debug/pprof/) 
