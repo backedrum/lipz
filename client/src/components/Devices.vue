@@ -24,9 +24,8 @@
       title="Devices Available"
       :columns="columns"
       :rows="rows"
-      :paginate="true"
-      styleClass="table table-bordered table-striped condensed"
-      :onClick="onClickFn">
+      theme="nocturnal"
+      @on-row-click="onRowClickFn">
     <div slot="emptystate">
       Sorry, there is nothing to display.
     </div>
@@ -56,17 +55,7 @@
             field: 'addressIP6'
           }
         ],
-        rows: [],
-        onClickFn: function (row, index) {
-          if (row.addressIP4 === '-') {
-            this.$modal.show('warn', {
-              title: 'Cannot capture!'
-            })
-            return
-          }
-
-          this.$modal.show('captureSettings', {title: 'Start capture', interfaceName: row.name, ip4Address: row.addressIP4, ip6Address: row.addressIP6})
-        }
+        rows: []
       }
     },
     methods: {
@@ -89,6 +78,20 @@
               console.log(response)
             })
         }, 100)
+      },
+      onRowClickFn (params) {
+        if (params.row.addressIP4 === '-') {
+          this.$modal.show('warn', {
+            title: 'Cannot capture!'
+          })
+          return
+        }
+
+        this.$modal.show('captureSettings', {
+          title: 'Start capture',
+          interfaceName: params.row.name,
+          ip4Address: params.row.addressIP4,
+          ip6Address: params.row.addressIP6})
       }
     },
     created () {

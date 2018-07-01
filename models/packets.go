@@ -6,6 +6,7 @@ type NetPacketInfo struct {
 	SrcPort  string
 	Dst      string
 	DstPort  string
+	Dump     string
 	Payload  string
 }
 

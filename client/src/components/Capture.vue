@@ -1,15 +1,25 @@
 <template>
-    <vue-good-table
-      title="Captured packets"
-      :columns="columns"
-      :rows="rows"
-      :paginate="true"
-      :globalSearch="true"
-      styleClass="table table-bordered table-striped">
-      <div slot="emptystate">
-        <vue-simple-spinner line-fg-color="#666666"></vue-simple-spinner>
-      </div>
-    </vue-good-table>
+  <vue-good-table
+    title="Captured packets"
+    :columns="columns"
+    :rows="rows"
+    theme="nocturnal"
+    :pagination-options="{
+      enabled: true,
+      rowsPerPageLabel: 'Packets per page'
+    }"
+    :globalSearch="true"
+    :search-options="{
+      enabled: true
+    }"
+    :sort-options="{
+      enabled: true
+    }"
+  >
+    <div slot="emptystate">
+      <vue-simple-spinner line-fg-color="#666666"></vue-simple-spinner>
+    </div>
+  </vue-good-table>
 </template>
 
 <script>
@@ -42,6 +52,11 @@
             field: 'dstPort'
           },
           {
+            label: 'Dump',
+            field: 'dump',
+            width: '500px'
+          },
+          {
             label: 'Payload',
             field: 'payload',
             width: '150px'
@@ -69,7 +84,15 @@
             .then(response => {
               for (var i = 0; i < response.body.NetPacketInfoList.length; i++) {
                 var packet = response.body.NetPacketInfoList[i]
-                self.rows.push({'protocol': packet.Protocol, 'srcIP': packet.Src, 'srcPort': packet.SrcPort, 'dstIP': packet.Dst, 'dstPort': packet.DstPort, 'payload': packet.Payload})
+                self.rows.push({
+                  'protocol': packet.Protocol,
+                  'srcIP': packet.Src,
+                  'srcPort': packet.SrcPort,
+                  'dstIP': packet.Dst,
+                  'dstPort': packet.DstPort,
+                  'dump': packet.Dump,
+                  'payload': packet.Payload
+                })
               }
             }, response => {
               console.log(response)

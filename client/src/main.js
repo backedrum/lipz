@@ -11,6 +11,8 @@ Vue.use(VModal)
 import VueGoodTable from 'vue-good-table'
 Vue.use(VueGoodTable)
 
+import 'vue-good-table/dist/vue-good-table.css'
+
 import VueResource from 'vue-resource'
 Vue.use(VueResource)
 

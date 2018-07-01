@@ -78,9 +78,13 @@ capture:
 
 		netPacket := models.NetPacketInfo{}
 
-		// set payload
+
 		appLayer := packet.ApplicationLayer()
 		if appLayer != nil {
+			// set dump
+			netPacket.Dump = packet.Dump()
+
+			// set payload
 			netPacket.Payload = string(appLayer.Payload())
 		}
 

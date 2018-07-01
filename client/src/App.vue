@@ -1,8 +1,16 @@
+<style>
+  .container {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 99% !important;
+  }
+</style>
+
 <template>
 <div id="app">
 
   <nav class="navbar navbar-default navbar-static-top">
-    <div class="container">
+    <div class="container ml-1 mr-1">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
           <span class="sr-only">Toggle navigation</span>
