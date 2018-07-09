@@ -16,6 +16,32 @@
       enabled: true
     }"
   >
+    <template slot="table-row" slot-scope="props">
+    <span v-if="props.column.field == 'protocol'">
+      <span style="color: #FF4136;">{{props.row.protocol}}</span>
+    </span>
+    <span v-else-if="props.column.field == 'srcIP'">
+      <span style="color: #FFDC00;">{{props.row.srcIP}}</span>
+    </span>
+    <span v-else-if="props.column.field == 'srcPort'">
+      <span style="color: #7FDBFF;">{{props.row.srcPort}}</span>
+    </span>
+    <span v-else-if="props.column.field == 'dstIP'">
+      <span style="color: #FFDC00;">{{props.row.dstIP}}</span>
+    </span>
+    <span v-else-if="props.column.field == 'dstPort'">
+      <span style="color: #7FDBFF;">{{props.row.dstPort}}</span>
+    </span>
+    <span v-else-if="props.column.field == 'dump'">
+      <span style="color: #2ECC40;">{{props.row.dump}}</span>
+    </span>
+    <span v-else-if="props.column.field == 'payload'">
+      <span style="color: #2ECC40;">{{props.row.payload}}</span>
+    </span>
+    <span v-else>
+      {{props.formattedRow[props.column.field]}}
+    </span>
+    </template>
     <div slot="emptystate">
       <vue-simple-spinner line-fg-color="#666666"></vue-simple-spinner>
     </div>
